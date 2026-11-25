@@ -1,0 +1,161 @@
+import {
+  Activity, Bell, Briefcase, CalendarDays, ChartBar, Clock, Coffee, DoorOpen, EyeOff, Flame, Gauge,
+  HardHat, Map, MapPin, PackageSearch, Radar, ScanEye, ScanFace, Search, ShieldCheck, Smartphone, Timer, UserCheck,
+  UserX, Users, Wallet,
+} from 'lucide-react'
+
+// Content for the individual solution pages (/solutions/:slug).
+// `rgb` = page accent colour, `chips` = floating HUD cards around the hero visual,
+// `demo` = starting view + heading for the interactive dashboard on the page.
+// Stats are placeholders — replace with your own verified numbers.
+export const SOLUTIONS = [
+  {
+    slug: 'ai-security',
+    icon: ShieldCheck,
+    name: 'AI Security',
+    short: 'Intrusion, unknown-face and threat detection on every camera.',
+    visual: 'security',
+    rgb: '59,130,246',
+    chips: [
+      { icon: Bell, t: 'Intrusion · Zone B', s: 'Alert sent in 0.8s', tone: '248,113,113' },
+      { icon: ShieldCheck, t: '48 cameras protected', s: 'All streams online', tone: '52,211,153' },
+    ],
+    interest: 'AI Security only',
+    demo: { view: 'alerts', title: ['Your security desk,', 'live in the browser.'], sub: 'Try it: open an alert, resolve it, expand a camera — or hit “Simulate incident” and watch the system react.' },
+    metaTitle: 'AI Video Security & Intrusion Detection',
+    eyebrow: 'Solution · AI Security',
+    title: ['A security guard', 'that never blinks.'],
+    sub: 'Turn every CCTV camera into an intelligent sensor that detects intruders, unknown faces, tailgating and fire in real time — and sends the clip to your phone before anyone has to watch a screen.',
+    stats: [
+      { v: '<1s', l: 'Camera-to-phone alert time' },
+      { v: '90%', l: 'Fewer false alarms vs. motion detection' },
+      { v: '24/7', l: 'Autonomous monitoring' },
+      { v: '30s', l: 'To find any event with smart search' },
+    ],
+    capabilities: [
+      { icon: Radar, t: 'Intrusion & virtual fences', d: 'Draw zones on any camera and get alerted the moment someone crosses a line, enters after hours or stays too long.' },
+      { icon: UserX, t: 'Unknown & blacklisted faces', d: 'Anyone not enrolled is flagged automatically. Add watchlists for banned visitors or ex-employees.' },
+      { icon: DoorOpen, t: 'Tailgating & access breaches', d: 'Detect two people passing on one badge, propped doors and forced entry at server rooms and exits.' },
+      { icon: Flame, t: 'Fire, smoke & hazards', d: 'Visual fire and smoke detection, plus PPE checks like helmets and vests in industrial zones.' },
+      { icon: PackageSearch, t: 'Unattended objects', d: 'Bags or packages left in lobbies, corridors or parking areas trigger an alert after a set time.' },
+      { icon: Search, t: 'Smart video search', d: 'Search recordings in plain words — "person in red jacket at Gate 2 yesterday" — instead of scrubbing footage.' },
+    ],
+    steps: [
+      { t: 'Connect cameras', d: 'Add your existing IP cameras, NVRs or DVRs over RTSP / ONVIF. No new hardware needed.' },
+      { t: 'Draw zones & rules', d: 'Mark restricted areas, entry lines and schedules directly on the camera view.' },
+      { t: 'AI watches every frame', d: 'Detection models analyse every stream continuously, at the edge or in the cloud.' },
+      { t: 'Alert, verify, respond', d: 'The right person gets a push, SMS or Slack alert with the video clip and can act in one tap.' },
+    ],
+    roles: [
+      { icon: ShieldCheck, t: 'Security teams', d: 'Stop staring at video walls. Respond only to real, verified events with the evidence attached.' },
+      { icon: Briefcase, t: 'Facility managers', d: 'Protect multiple sites from one dashboard with consistent rules and audit trails.' },
+      { icon: Users, t: 'Business owners', d: 'Get notified on your phone about anything unusual at your office, even when you are away.' },
+    ],
+    faqs: [
+      { q: 'Will it work with my existing cameras?', a: 'Yes. Any camera or recorder that provides an RTSP or ONVIF stream can be connected. 1080p or higher is recommended for face detection.' },
+      { q: 'How does it reduce false alarms?', a: 'Instead of reacting to any pixel change, the AI classifies what it sees — people, vehicles, objects — so moving trees, shadows and pets do not trigger alerts.' },
+      { q: 'Can alerts go to our existing tools?', a: 'Alerts can be delivered via mobile push, email, SMS, Slack, Microsoft Teams or webhooks to your own systems.' },
+      { q: 'Does it record video?', a: 'Yes. Continuous and event-based recording are supported, stored on-premise or in the cloud with configurable retention.' },
+    ],
+  },
+  {
+    slug: 'employee-tracking',
+    icon: Activity,
+    name: 'Employee Tracking',
+    short: 'Live location, occupancy and activity insights across your office.',
+    visual: 'tracking',
+    rgb: '34,211,238',
+    chips: [
+      { icon: MapPin, t: '47 people · Floor 2', s: 'Updated live', tone: '34,211,238' },
+      { icon: Coffee, t: 'Avg. break 41 min', s: 'Within policy', tone: '251,191,36' },
+    ],
+    interest: 'Employee tracking',
+    demo: { view: 'analytics', title: ['See your workplace', 'in real time.'], sub: 'Try it: hover the occupancy heatmap, switch metrics, or open People to see anyone’s day at a glance.' },
+    metaTitle: 'AI Employee Tracking & Workplace Analytics',
+    eyebrow: 'Solution · Employee Tracking',
+    title: ['See how your workplace', 'really works.'],
+    sub: 'Understand where teams spend their time, how desks and rooms are used and how breaks add up — measured automatically by an AI model trained on your own staff, with privacy controls built in.',
+    stats: [
+      { v: 'Live', l: 'Location by floor, zone and desk' },
+      { v: '100%', l: 'Automatic — no timesheets or apps' },
+      { v: '18%', l: 'Typical office space that sits unused' },
+      { v: '5 min', l: 'To set up a new zone' },
+    ],
+    capabilities: [
+      { icon: MapPin, t: 'Real-time location', d: 'See who is on which floor, zone or desk right now, with a live floor-plan view.' },
+      { icon: Timer, t: 'Active vs. idle time', d: 'Measure time at desk, in meetings and away, per person or per team, without manual input.' },
+      { icon: Coffee, t: 'Break tracking', d: 'Break counts and durations are logged automatically and compared against your policy.' },
+      { icon: Map, t: 'Heatmaps & occupancy', d: 'Find out which areas are overcrowded and which are unused, to plan seating and space better.' },
+      { icon: Gauge, t: 'Productivity trends', d: 'Weekly and monthly trends per team, with comparisons and early warnings when patterns change.' },
+      { icon: EyeOff, t: 'Privacy controls', d: 'Aggregate-only views, face blurring, masked zones (like restrooms) and role-based access.' },
+    ],
+    steps: [
+      { t: 'Map your floors', d: 'Upload a floor plan and link each camera to the zones and desks it covers.' },
+      { t: 'Enroll your team', d: 'Add employee photos once — the AI model learns to recognise your staff on your cameras.' },
+      { t: 'Track automatically', d: 'Presence, movement and dwell time are measured continuously in the background.' },
+      { t: 'Act on insights', d: 'Managers get dashboards and weekly reports; HR gets exports for reviews and policy.' },
+    ],
+    roles: [
+      { icon: Briefcase, t: 'Managers', d: 'Know team availability at a glance and spot workload or engagement issues early.' },
+      { icon: Users, t: 'HR teams', d: 'Back policies on breaks, hybrid work and overtime with objective data instead of guesswork.' },
+      { icon: ChartBar, t: 'Operations', d: 'Right-size office space, plan seating and cut costs from under-used floors.' },
+    ],
+    faqs: [
+      { q: 'Is employee tracking legal?', a: 'It depends on your country and local labour laws. Most require informing employees and having a legitimate purpose. The platform includes consent flows, privacy masking and audit logs to help you stay transparent — check with your legal advisor.' },
+      { q: 'Can employees see their own data?', a: 'Yes. You can give employees a personal view of their own attendance and activity, which builds trust.' },
+      { q: 'Does it track people outside work areas?', a: 'No. You choose exactly which cameras and zones are used, and can mask private areas completely.' },
+      { q: 'Do employees need to install anything?', a: 'No. Tracking works from the cameras alone — no apps, badges or wearables required.' },
+    ],
+  },
+  {
+    slug: 'smart-attendance',
+    icon: UserCheck,
+    name: 'Smart Attendance',
+    short: 'Touchless face-recognition check-in synced to payroll.',
+    visual: 'attendance',
+    rgb: '52,211,153',
+    chips: [
+      { icon: UserCheck, t: '142 / 150 present', s: 'Synced to payroll', tone: '52,211,153' },
+      { icon: ScanEye, t: 'Photo spoof blocked', s: 'Liveness check', tone: '248,113,113' },
+    ],
+    interest: 'Attendance only',
+    demo: { view: 'people', title: ['Today’s attendance,', 'one click away.'], sub: 'Try it: search an employee, sort by check-in time, filter by department and open a profile to see their day.' },
+    metaTitle: 'Face Recognition Attendance System',
+    eyebrow: 'Solution · Smart Attendance',
+    title: ['Attendance that', 'marks itself.'],
+    sub: 'Employees walk in and are recognised in under a second — no cards, no fingerprint queues, no buddy punching. Check-ins, late marks and overtime are calculated automatically and sent to payroll.',
+    stats: [
+      { v: '<1s', l: 'Recognition per person' },
+      { v: '0', l: 'Cards, PINs or fingerprint scanners' },
+      { v: '100%', l: 'Buddy-punching eliminated' },
+      { v: '1-click', l: 'Export to payroll & HRMS' },
+    ],
+    capabilities: [
+      { icon: ScanFace, t: 'Touchless face check-in', d: 'Recognises employees walking past an entrance camera — even with glasses, masks or a new haircut.' },
+      { icon: ScanEye, t: 'Liveness anti-spoofing', d: 'Rejects photos, videos on phones and masks, so attendance can only be marked in person.' },
+      { icon: Clock, t: 'Shifts & late rules', d: 'Fixed, flexible and rotating shifts with grace periods, late marks, early exits and overtime.' },
+      { icon: CalendarDays, t: 'Leave & holidays', d: 'Leave requests, approvals and holiday calendars per location, reflected in reports automatically.' },
+      { icon: Wallet, t: 'Payroll export', d: 'Send worked hours and overtime to your payroll or HRMS via CSV, Excel, API or webhooks.' },
+      { icon: Smartphone, t: 'Mobile & field staff', d: 'Remote or field employees can check in from the mobile app with face verification and GPS.' },
+    ],
+    steps: [
+      { t: 'Point a camera at the entrance', d: 'Use an existing camera or add one at each door. One camera covers multiple people at once.' },
+      { t: 'Enroll employees', d: 'Upload 3–5 photos per person or let staff self-enroll from the app in a minute.' },
+      { t: 'Walk in — done', d: 'Attendance is marked the moment someone is recognised, with time, door and snapshot.' },
+      { t: 'Reports & payroll', d: 'Daily, weekly and monthly reports are ready instantly and synced to payroll.' },
+    ],
+    roles: [
+      { icon: Users, t: 'HR & payroll', d: 'No more chasing timesheets or fixing punch errors. Accurate hours flow straight into payroll.' },
+      { icon: HardHat, t: 'Shift-based teams', d: 'Factories and hospitals handle hundreds of check-ins at shift change without queues.' },
+      { icon: Bell, t: 'Team leads', d: 'Get notified about late arrivals and absences in real time and plan cover early.' },
+    ],
+    faqs: [
+      { q: 'How accurate is face-recognition attendance?', a: 'With good entrance lighting and a 1080p camera, recognition is highly accurate, and the model keeps improving on your own staff over time. Unclear matches can be sent for quick manual confirmation.' },
+      { q: 'Can someone use a photo to fake attendance?', a: 'No. Liveness detection checks depth, texture and micro-movement to reject printed photos, screens and masks.' },
+      { q: 'What happens if the internet goes down?', a: 'Edge devices keep recognising and storing check-ins locally, then sync automatically when the connection returns.' },
+      { q: 'Which payroll systems are supported?', a: 'Data can be exported in standard CSV/Excel formats or pushed to any system via our REST API and webhooks.' },
+    ],
+  },
+]
+
+export const getSolution = (slug) => SOLUTIONS.find((s) => s.slug === slug)
