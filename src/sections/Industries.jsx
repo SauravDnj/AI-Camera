@@ -24,30 +24,29 @@ export function Industries() {
     <section className="relative py-24 lg:py-32">
       <Container>
         <SectionHeader eyebrow="Industries" title={<>Built for teams of <span className="text-gradient">every shape.</span></>} sub="Start with security, attendance or tracking — and switch on the rest whenever you're ready." />
-        <div className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-16 grid gap-px overflow-hidden rounded-xl border border-white/[.08] bg-white/[.08] sm:grid-cols-2 lg:grid-cols-3">
           {INDUSTRIES.map((x, i) => {
             const Icon = x.icon
             return (
+              <div key={x.t} className="bg-bg">
               <motion.div
-                key={x.t}
-                initial={{ opacity: 0, x: i % 2 ? 50 : -50, filter: 'blur(6px)' }}
+                className="h-full"
+                initial={{ opacity: 0, x: i % 2 ? 24 : -24, filter: 'blur(6px)' }}
                 whileInView={{ opacity: 1, x: 0, filter: 'blur(0px)', transitionEnd: { filter: 'none' } }}
                 viewport={{ once: true, margin: '-60px' }}
                 transition={{ duration: 0.8, ease, delay: (i % 3) * 0.08 }}
               >
-                <SpotlightCard rgb={x.rgb} className="flex h-full gap-4 p-6">
-                  <span
-                    className="grid h-12 w-12 shrink-0 place-items-center rounded-xl transition-transform duration-500 group-hover:rotate-[360deg] group-hover:scale-110"
-                    style={{ background: `rgba(${x.rgb},.12)`, color: `rgb(${x.rgb})` }}
-                  >
+                <SpotlightCard flat className="flex h-full gap-4 p-7">
+                  <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg border border-white/[.08] bg-white/[.03] text-fg/80 transition-transform duration-500 group-hover:rotate-[360deg]">
                     <Icon className="h-5 w-5" aria-hidden="true" />
                   </span>
                   <div>
-                    <h3 className="font-semibold">{x.t}</h3>
-                    <p className="mt-1.5 text-sm leading-relaxed text-muted">{x.d}</p>
+                    <h3 className="text-[16px] font-medium">{x.t}</h3>
+                    <p className="mt-1.5 text-[15px] leading-relaxed text-muted">{x.d}</p>
                   </div>
                 </SpotlightCard>
               </motion.div>
+              </div>
             )
           })}
         </div>

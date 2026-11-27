@@ -21,10 +21,10 @@ export default function Pricing({ id = 'pricing', header = true, compareLink = t
                 key={l}
                 onClick={() => setYearly(v)}
                 aria-pressed={yearly === v}
-                className={`relative min-h-10 cursor-pointer rounded-full px-5 text-sm font-medium transition-colors ${yearly === v ? 'text-white' : 'text-muted hover:text-fg'}`}
+                className={`relative min-h-10 cursor-pointer rounded-full px-5 text-sm font-medium transition-colors ${yearly === v ? 'text-[#08090A]' : 'text-muted hover:text-fg'}`}
               >
-                {yearly === v && <motion.span layoutId="bill-pill" className="absolute inset-0 rounded-full bg-accent" transition={{ type: 'spring', stiffness: 400, damping: 32 }} />}
-                <span className="relative">{l}{v && <span className={`ml-1.5 rounded px-1 text-xs ${yearly ? 'bg-white/20 text-white' : 'text-ok'}`}>−20%</span>}</span>
+                {yearly === v && <motion.span layoutId="bill-pill" className="absolute inset-0 rounded-full bg-[#E5E5E6]" transition={{ type: 'spring', stiffness: 400, damping: 32 }} />}
+                <span className="relative">{l}{v && <span className={`ml-1.5 rounded px-1 text-xs ${yearly ? 'bg-black/10 text-[#08090A]' : 'text-ok'}`}>−20%</span>}</span>
               </button>
             ))}
           </div>
@@ -33,12 +33,12 @@ export default function Pricing({ id = 'pricing', header = true, compareLink = t
         <div className="mt-12 grid items-stretch gap-5 [perspective:1400px] lg:grid-cols-3">
           {PLANS.map((p, i) => {
             const body = (
-              <div className={`relative flex h-full flex-col rounded-2xl p-8 ${p.popular ? 'bg-gradient-to-b from-[#132147] to-[#0E1220]' : ''}`}>
-                {p.popular && <div className="pointer-events-none absolute -top-24 left-1/2 h-48 w-64 -translate-x-1/2 rounded-full bg-accent/30 blur-3xl" aria-hidden="true" />}
+              <div className={`relative flex h-full flex-col rounded-2xl p-8 ${p.popular ? 'bg-[linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.015)_60%),#0F1011]' : ''}`}>
+                {p.popular && <div className="pointer-events-none absolute -top-24 left-1/2 h-48 w-64 -translate-x-1/2 rounded-full bg-white/10 blur-3xl" aria-hidden="true" />}
                 <div className="relative flex items-center justify-between gap-3">
                   <h3 className="text-xl font-semibold">{p.name}</h3>
                   {p.popular && (
-                    <span className="relative flex items-center gap-1 overflow-hidden rounded-full bg-accent px-3 py-1 text-xs font-semibold text-white">
+                    <span className="relative flex items-center gap-1 overflow-hidden rounded-full border border-white/10 bg-white/[.06] px-3 py-1 text-xs font-medium text-fg">
                       <span className="absolute inset-y-0 left-0 w-1/2 bg-gradient-to-r from-transparent via-white/40 to-transparent animate-[shine_2.8s_ease-in-out_infinite]" aria-hidden="true" />
                       <Sparkles className="relative h-3.5 w-3.5" aria-hidden="true" /> <span className="relative">Most popular</span>
                     </span>
@@ -106,7 +106,7 @@ export default function Pricing({ id = 'pricing', header = true, compareLink = t
                 className={p.popular ? 'lg:-my-3' : ''}
               >
                 {p.popular ? (
-                  <BeamBorder speed="4s" className="h-full shadow-[0_30px_90px_-30px_rgba(59,130,246,.75)]">{body}</BeamBorder>
+                  <BeamBorder speed="4s" className="h-full shadow-[0_30px_90px_-30px_rgba(0,0,0,.9)]">{body}</BeamBorder>
                 ) : (
                   <SpotlightCard tilt={false} className="h-full">{body}</SpotlightCard>
                 )}

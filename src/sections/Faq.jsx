@@ -14,11 +14,11 @@ const FAQS = [
 
 function Item({ f, open, onToggle, i }) {
   return (
-    <div className={`relative border-b border-line transition-colors duration-300 ${open ? 'bg-gradient-to-r from-accent/[.07] to-transparent' : ''}`}>
+    <div className={`relative border-b border-line transition-colors duration-300 ${open ? 'bg-white/[.02]' : ''}`}>
       {open && (
         <motion.span
           layoutId="faq-active"
-          className="absolute -left-px bottom-0 top-0 w-0.5 rounded-full bg-gradient-to-b from-accent to-cyan shadow-[0_0_12px_#22D3EE]"
+          className="absolute -left-px bottom-0 top-0 w-0.5 rounded-full bg-fg"
           transition={{ type: 'spring', stiffness: 400, damping: 35 }}
           aria-hidden="true"
         />
@@ -29,10 +29,10 @@ function Item({ f, open, onToggle, i }) {
           aria-expanded={open}
           aria-controls={`faq-a-${i}`}
           onClick={onToggle}
-          className="flex w-full cursor-pointer items-center justify-between gap-6 py-6 text-left text-base font-medium transition-colors hover:text-cyan sm:text-lg"
+          className="flex w-full cursor-pointer items-center justify-between gap-6 py-6 text-left text-[17px] font-medium transition-colors hover:text-fg sm:text-lg"
         >
           {f.q}
-          <motion.span animate={{ rotate: open ? 180 : 0 }} transition={{ duration: 0.25 }} className={`mr-3 grid h-8 w-8 shrink-0 place-items-center rounded-full border transition-colors duration-300 ${open ? 'border-cyan/60 bg-cyan/10 text-cyan' : 'border-line'}`}>
+          <motion.span animate={{ rotate: open ? 180 : 0 }} transition={{ duration: 0.25 }} className={`mr-3 grid h-8 w-8 shrink-0 place-items-center rounded-full border transition-colors duration-300 ${open ? 'border-white/20 bg-white/[.06] text-fg' : 'border-line'}`}>
             <ChevronDown className="h-4 w-4" aria-hidden="true" />
           </motion.span>
         </button>

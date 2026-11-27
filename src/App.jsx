@@ -19,7 +19,8 @@ gsap.registerPlugin(ScrollTrigger)
 function useSmoothScroll() {
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-    const lenis = new Lenis({ duration: 1.15, smoothWheel: true })
+    // lerp (not a fixed duration) keeps scrolling responsive: it follows the wheel closely and never "lags behind"
+    const lenis = new Lenis({ lerp: 0.14, smoothWheel: true, wheelMultiplier: 1, touchMultiplier: 1.4 })
     lenisRef.current = lenis
     lenis.on('scroll', ScrollTrigger.update)
     const raf = (time) => lenis.raf(time * 1000)

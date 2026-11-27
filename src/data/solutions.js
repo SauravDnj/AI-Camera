@@ -6,6 +6,7 @@ import {
 
 // Content for the individual solution pages (/solutions/:slug).
 // `rgb` = page accent colour, `chips` = floating HUD cards around the hero visual,
+// `video` = real clip (in /public/videos/solutions) for the hero, each capability card and each workflow step,
 // `demo` = starting view + heading for the interactive dashboard on the page.
 // Stats are placeholders — replace with your own verified numbers.
 export const SOLUTIONS = [
@@ -15,6 +16,7 @@ export const SOLUTIONS = [
     name: 'AI Security',
     short: 'Intrusion, unknown-face and threat detection on every camera.',
     visual: 'security',
+    video: { src: '/videos/solutions/security/hero-soc.mp4', label: 'SOC · Live wall', tag: '3 alerts · 48 cameras', tone: 'alert' },
     rgb: '59,130,246',
     chips: [
       { icon: Bell, t: 'Intrusion · Zone B', s: 'Alert sent in 0.8s', tone: '248,113,113' },
@@ -33,18 +35,18 @@ export const SOLUTIONS = [
       { v: '30s', l: 'To find any event with smart search' },
     ],
     capabilities: [
-      { icon: Radar, t: 'Intrusion & virtual fences', d: 'Draw zones on any camera and get alerted the moment someone crosses a line, enters after hours or stays too long.' },
-      { icon: UserX, t: 'Unknown & blacklisted faces', d: 'Anyone not enrolled is flagged automatically. Add watchlists for banned visitors or ex-employees.' },
-      { icon: DoorOpen, t: 'Tailgating & access breaches', d: 'Detect two people passing on one badge, propped doors and forced entry at server rooms and exits.' },
-      { icon: Flame, t: 'Fire, smoke & hazards', d: 'Visual fire and smoke detection, plus PPE checks like helmets and vests in industrial zones.' },
-      { icon: PackageSearch, t: 'Unattended objects', d: 'Bags or packages left in lobbies, corridors or parking areas trigger an alert after a set time.' },
-      { icon: Search, t: 'Smart video search', d: 'Search recordings in plain words — "person in red jacket at Gate 2 yesterday" — instead of scrubbing footage.' },
+      { icon: Radar, t: 'Intrusion & virtual fences', d: 'Draw zones on any camera and get alerted the moment someone crosses a line, enters after hours or stays too long.', video: { src: '/videos/solutions/security/perimeter-fence.mp4', label: 'CAM-21 · North fence', tag: 'ZONE A · LINE CROSSED', tone: 'alert' } },
+      { icon: UserX, t: 'Unknown & blacklisted faces', d: 'Anyone not enrolled is flagged automatically. Add watchlists for banned visitors or ex-employees.', video: { src: '/videos/solutions/security/street-night.mp4', label: 'CAM-03 · Front street', tag: 'UNKNOWN FACE · 58%', tone: 'alert' } },
+      { icon: DoorOpen, t: 'Tailgating & access breaches', d: 'Detect two people passing on one badge, propped doors and forced entry at server rooms and exits.', video: { src: '/videos/solutions/security/garage-door.mp4', label: 'CAM-12 · Loading bay', tag: 'DOOR 3 · TAILGATING', tone: 'alert' } },
+      { icon: Flame, t: 'Fire, smoke & hazards', d: 'Visual fire and smoke detection, plus PPE checks like helmets and vests in industrial zones.', video: { src: '/videos/solutions/security/fire.mp4', label: 'CAM-30 · Boiler room', tag: 'FIRE · 97% confidence', tone: 'alert' } },
+      { icon: PackageSearch, t: 'Unattended objects', d: 'Bags or packages left in lobbies, corridors or parking areas trigger an alert after a set time.', video: { src: '/videos/solutions/security/subway-corridor.mp4', label: 'CAM-08 · Corridor B', tag: 'OBJECT LEFT · 4 min', tone: 'warn' } },
+      { icon: Search, t: 'Smart video search', d: 'Search recordings in plain words — "person in red jacket at Gate 2 yesterday" — instead of scrubbing footage.', video: { src: '/videos/solutions/security/station-crowd.mp4', label: 'CAM-02 · Main hall', tag: 'SEARCH · "black backpack" · 3 hits', tone: 'info' } },
     ],
     steps: [
-      { t: 'Connect cameras', d: 'Add your existing IP cameras, NVRs or DVRs over RTSP / ONVIF. No new hardware needed.' },
-      { t: 'Draw zones & rules', d: 'Mark restricted areas, entry lines and schedules directly on the camera view.' },
-      { t: 'AI watches every frame', d: 'Detection models analyse every stream continuously, at the edge or in the cloud.' },
-      { t: 'Alert, verify, respond', d: 'The right person gets a push, SMS or Slack alert with the video clip and can act in one tap.' },
+      { t: 'Connect cameras', d: 'Add your existing IP cameras, NVRs or DVRs over RTSP / ONVIF. No new hardware needed.', video: { src: '/videos/solutions/security/parking-garage.mp4', label: 'CAM-17 · Parking P2', tag: 'RTSP connected · 1080p', tone: 'ok' } },
+      { t: 'Draw zones & rules', d: 'Mark restricted areas, entry lines and schedules directly on the camera view.', video: { src: '/videos/solutions/security/perimeter-fence.mp4', label: 'CAM-21 · North fence', tag: 'Zone A · drawn', tone: 'info' } },
+      { t: 'AI watches every frame', d: 'Detection models analyse every stream continuously, at the edge or in the cloud.', video: { src: '/videos/solutions/security/station-crowd.mp4', label: 'CAM-02 · Main hall', tag: '42 people · analysing', tone: 'ok' } },
+      { t: 'Alert, verify, respond', d: 'The right person gets a push, SMS or Slack alert with the video clip and can act in one tap.', video: { src: '/videos/solutions/security/hero-soc.mp4', label: 'SOC · Live wall', tag: 'Alert verified · team notified', tone: 'alert' } },
     ],
     roles: [
       { icon: ShieldCheck, t: 'Security teams', d: 'Stop staring at video walls. Respond only to real, verified events with the evidence attached.' },
@@ -64,6 +66,7 @@ export const SOLUTIONS = [
     name: 'Employee Tracking',
     short: 'Live location, occupancy and activity insights across your office.',
     visual: 'tracking',
+    video: { src: '/videos/solutions/tracking/hero-team-topview.mp4', label: 'CAM-14 · Floor 2 · Studio', tag: '5 people · tracked', tone: 'ok' },
     rgb: '34,211,238',
     chips: [
       { icon: MapPin, t: '47 people · Floor 2', s: 'Updated live', tone: '34,211,238' },
@@ -82,18 +85,18 @@ export const SOLUTIONS = [
       { v: '5 min', l: 'To set up a new zone' },
     ],
     capabilities: [
-      { icon: MapPin, t: 'Real-time location', d: 'See who is on which floor, zone or desk right now, with a live floor-plan view.' },
-      { icon: Timer, t: 'Active vs. idle time', d: 'Measure time at desk, in meetings and away, per person or per team, without manual input.' },
-      { icon: Coffee, t: 'Break tracking', d: 'Break counts and durations are logged automatically and compared against your policy.' },
-      { icon: Map, t: 'Heatmaps & occupancy', d: 'Find out which areas are overcrowded and which are unused, to plan seating and space better.' },
-      { icon: Gauge, t: 'Productivity trends', d: 'Weekly and monthly trends per team, with comparisons and early warnings when patterns change.' },
-      { icon: EyeOff, t: 'Privacy controls', d: 'Aggregate-only views, face blurring, masked zones (like restrooms) and role-based access.' },
+      { icon: MapPin, t: 'Real-time location', d: 'See who is on which floor, zone or desk right now, with a live floor-plan view.', video: { src: '/videos/solutions/tracking/office-walk.mp4', label: 'CAM-09 · Floor 2 aisle', tag: 'FLOOR 2 · 14 people', tone: 'ok' } },
+      { icon: Timer, t: 'Active vs. idle time', d: 'Measure time at desk, in meetings and away, per person or per team, without manual input.', video: { src: '/videos/solutions/tracking/desks.mp4', label: 'CAM-11 · Ops desks', tag: 'ACTIVE · 6h 12m today', tone: 'ok' } },
+      { icon: Coffee, t: 'Break tracking', d: 'Break counts and durations are logged automatically and compared against your policy.', video: { src: '/videos/solutions/tracking/coffee-break.mp4', label: 'CAM-05 · Kitchen', tag: 'BREAK · 12 min', tone: 'warn' } },
+      { icon: Map, t: 'Heatmaps & occupancy', d: 'Find out which areas are overcrowded and which are unused, to plan seating and space better.', video: { src: '/videos/solutions/tracking/lounge-topview.mp4', label: 'CAM-07 · Lounge', tag: 'OCCUPANCY · 78%', tone: 'info' } },
+      { icon: Gauge, t: 'Productivity trends', d: 'Weekly and monthly trends per team, with comparisons and early warnings when patterns change.', video: { src: '/videos/solutions/tracking/cubicles.mp4', label: 'CAM-16 · Support team', tag: 'TEAM TREND · +6% this week', tone: 'ok' } },
+      { icon: EyeOff, t: 'Privacy controls', d: 'Aggregate-only views, face blurring, masked zones (like restrooms) and role-based access.', video: { src: '/videos/solutions/tracking/desk-topview.mp4', label: 'CAM-14 · Studio', tag: 'PRIVACY MODE · faces blurred', tone: 'info', blur: true } },
     ],
     steps: [
-      { t: 'Map your floors', d: 'Upload a floor plan and link each camera to the zones and desks it covers.' },
-      { t: 'Enroll your team', d: 'Add employee photos once — the AI model learns to recognise your staff on your cameras.' },
-      { t: 'Track automatically', d: 'Presence, movement and dwell time are measured continuously in the background.' },
-      { t: 'Act on insights', d: 'Managers get dashboards and weekly reports; HR gets exports for reviews and policy.' },
+      { t: 'Map your floors', d: 'Upload a floor plan and link each camera to the zones and desks it covers.', video: { src: '/videos/solutions/tracking/hallway.mp4', label: 'CAM-04 · Floor 2 hall', tag: 'Zone mapped · Floor 2', tone: 'info' } },
+      { t: 'Enroll your team', d: 'Add employee photos once — the AI model learns to recognise your staff on your cameras.', video: { src: '/videos/solutions/tracking/team-meeting.mp4', label: 'CAM-19 · Meeting room', tag: '6 faces enrolled', tone: 'ok' } },
+      { t: 'Track automatically', d: 'Presence, movement and dwell time are measured continuously in the background.', video: { src: '/videos/solutions/tracking/office-walk.mp4', label: 'CAM-09 · Floor 2 aisle', tag: 'Tracking · 14 people', tone: 'ok' } },
+      { t: 'Act on insights', d: 'Managers get dashboards and weekly reports; HR gets exports for reviews and policy.', video: { src: '/videos/solutions/tracking/whiteboard.mp4', label: 'CAM-22 · Huddle room', tag: 'Weekly report ready', tone: 'info' } },
     ],
     roles: [
       { icon: Briefcase, t: 'Managers', d: 'Know team availability at a glance and spot workload or engagement issues early.' },
@@ -113,6 +116,7 @@ export const SOLUTIONS = [
     name: 'Smart Attendance',
     short: 'Touchless face-recognition check-in synced to payroll.',
     visual: 'attendance',
+    video: { src: '/videos/solutions/attendance/hero-arrival.mp4', label: 'CAM-01 · Main entrance', tag: 'CHECK-IN · 2 recognised · 08:57', tone: 'ok' },
     rgb: '52,211,153',
     chips: [
       { icon: UserCheck, t: '142 / 150 present', s: 'Synced to payroll', tone: '52,211,153' },
@@ -131,18 +135,18 @@ export const SOLUTIONS = [
       { v: '1-click', l: 'Export to payroll & HRMS' },
     ],
     capabilities: [
-      { icon: ScanFace, t: 'Touchless face check-in', d: 'Recognises employees walking past an entrance camera — even with glasses, masks or a new haircut.' },
-      { icon: ScanEye, t: 'Liveness anti-spoofing', d: 'Rejects photos, videos on phones and masks, so attendance can only be marked in person.' },
-      { icon: Clock, t: 'Shifts & late rules', d: 'Fixed, flexible and rotating shifts with grace periods, late marks, early exits and overtime.' },
-      { icon: CalendarDays, t: 'Leave & holidays', d: 'Leave requests, approvals and holiday calendars per location, reflected in reports automatically.' },
-      { icon: Wallet, t: 'Payroll export', d: 'Send worked hours and overtime to your payroll or HRMS via CSV, Excel, API or webhooks.' },
-      { icon: Smartphone, t: 'Mobile & field staff', d: 'Remote or field employees can check in from the mobile app with face verification and GPS.' },
+      { icon: ScanFace, t: 'Touchless face check-in', d: 'Recognises employees walking past an entrance camera — even with glasses, masks or a new haircut.', video: { src: '/videos/solutions/attendance/walk-in.mp4', label: 'CAM-01 · Entrance', tag: 'CHECK-IN · EMP-0142 · 0.3s', tone: 'ok' } },
+      { icon: ScanEye, t: 'Liveness anti-spoofing', d: 'Rejects photos, videos on phones and masks, so attendance can only be marked in person.', video: { src: '/videos/solutions/attendance/photo-spoof.mp4', label: 'CAM-01 · Entrance', tag: 'SPOOF BLOCKED · printed photo', tone: 'alert' } },
+      { icon: Clock, t: 'Shifts & late rules', d: 'Fixed, flexible and rotating shifts with grace periods, late marks, early exits and overtime.', video: { src: '/videos/solutions/attendance/factory-shift.mp4', label: 'CAM-31 · Plant gate', tag: 'SHIFT B · 142 checked in', tone: 'ok' } },
+      { icon: CalendarDays, t: 'Leave & holidays', d: 'Leave requests, approvals and holiday calendars per location, reflected in reports automatically.', video: { src: '/videos/solutions/attendance/reception.mp4', label: 'CAM-02 · Reception', tag: 'ON LEAVE · 3 today', tone: 'info' } },
+      { icon: Wallet, t: 'Payroll export', d: 'Send worked hours and overtime to your payroll or HRMS via CSV, Excel, API or webhooks.', video: { src: '/videos/solutions/attendance/payroll-desk.mp4', label: 'HR · Payroll', tag: 'PAYROLL · synced 09:00', tone: 'ok' } },
+      { icon: Smartphone, t: 'Mobile & field staff', d: 'Remote or field employees can check in from the mobile app with face verification and GPS.', video: { src: '/videos/solutions/attendance/mobile-face.mp4', label: 'Mobile app', tag: 'MOBILE · face + GPS verified', tone: 'ok' } },
     ],
     steps: [
-      { t: 'Point a camera at the entrance', d: 'Use an existing camera or add one at each door. One camera covers multiple people at once.' },
-      { t: 'Enroll employees', d: 'Upload 3–5 photos per person or let staff self-enroll from the app in a minute.' },
-      { t: 'Walk in — done', d: 'Attendance is marked the moment someone is recognised, with time, door and snapshot.' },
-      { t: 'Reports & payroll', d: 'Daily, weekly and monthly reports are ready instantly and synced to payroll.' },
+      { t: 'Point a camera at the entrance', d: 'Use an existing camera or add one at each door. One camera covers multiple people at once.', video: { src: '/videos/solutions/attendance/door-open.mp4', label: 'CAM-01 · Main door', tag: 'Camera online · entrance', tone: 'ok' } },
+      { t: 'Enroll employees', d: 'Upload 3–5 photos per person or let staff self-enroll from the app in a minute.', video: { src: '/videos/solutions/attendance/face-scan.mp4', label: 'Enrolment', tag: 'Face enrolled · 5 angles', tone: 'info' } },
+      { t: 'Walk in — done', d: 'Attendance is marked the moment someone is recognised, with time, door and snapshot.', video: { src: '/videos/solutions/attendance/glass-door.mp4', label: 'CAM-01 · Main door', tag: 'Recognised · 0.4s · on time', tone: 'ok' } },
+      { t: 'Reports & payroll', d: 'Daily, weekly and monthly reports are ready instantly and synced to payroll.', video: { src: '/videos/solutions/attendance/payroll-desk.mp4', label: 'HR · Payroll', tag: 'Report exported · 150 staff', tone: 'info' } },
     ],
     roles: [
       { icon: Users, t: 'HR & payroll', d: 'No more chasing timesheets or fixing punch errors. Accurate hours flow straight into payroll.' },

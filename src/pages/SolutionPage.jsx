@@ -1,13 +1,11 @@
 import {
-  motion, useMotionTemplate, useMotionValue, useMotionValueEvent, useReducedMotion, useScroll, useSpring, useTransform,
+  AnimatePresence, motion, useMotionTemplate, useMotionValue, useMotionValueEvent, useReducedMotion, useScroll, useSpring, useTransform,
 } from 'framer-motion'
 import { ArrowRight, Check, ChevronRight } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import AttendanceVisual from '../components/AttendanceVisual'
-import CameraFeed from '../components/CameraFeed'
+import LiveVideo from '../components/LiveVideo'
 import Magnetic from '../components/Magnetic'
-import TrackingVisual from '../components/TrackingVisual'
 import HeroBackdrop from '../components/hero/HeroBackdrop'
 import { BeamBorder, Button, Container, Eyebrow, Reveal, SectionHeader, SpotlightCard, ease } from '../components/ui'
 import { BRAND } from '../config'
@@ -17,8 +15,6 @@ import Dashboard from '../sections/Dashboard'
 import Faq from '../sections/Faq'
 import { CountUp } from '../sections/TrustBar'
 import NotFound from './NotFound'
-
-const VISUALS = { security: CameraFeed, tracking: TrackingVisual, attendance: AttendanceVisual }
 
 /* ── Hero ─────────────────────────────────────────────── */
 
@@ -48,13 +44,21 @@ function FloatChip({ c, className, delay, depth, mx, my }) {
 }
 
 function Hero({ s }) {
-  const Visual = VISUALS[s.visual]
   const reduce = useReducedMotion()
   const ref = useRef(null)
 
   // scroll parallax on background only
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
-  const bgY = useTransform(scrollYProgress, [0, 1], ['0%', '12%'])
+  // hero is at the top of the page: progress = scrollY / height (no per-frame element measuring)
+  const { scrollY } = useScroll()
+  const heroH = useRef(900)
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const ro = new ResizeObserver(([e]) => { heroH.current = e.contentRect.height || 900 })
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [])
+  const bgY = useTransform(scrollY, (y) => `${Math.min(1, Math.max(0, y / heroH.current)) * 12}%`)
 
   // cursor spotlight + mouse-driven 3D tilt for the visual
   const sx = useMotionValue(-1000)
@@ -67,8 +71,8 @@ function Hero({ s }) {
   const rotX = useTransform(my, [-0.5, 0.5], [8, -8])
   const rotY = useTransform(mx, [-0.5, 0.5], [-10, 10])
   const onMove = (e) => {
-    const r = e.currentTarget.getBoundingClientRect()
-    sx.set(e.clientX - r.left); sy.set(e.clientY - r.top)
+    // the section starts at the top-left of the page, so no getBoundingClientRect() (a forced layout) per mouse move
+    sx.set(e.clientX); sy.set(e.clientY + window.scrollY)
     if (reduce || e.pointerType !== 'mouse') return
     rawX.set(e.clientX / window.innerWidth - 0.5)
     rawY.set(e.clientY / window.innerHeight - 0.5)
@@ -146,7 +150,7 @@ function Hero({ s }) {
             >
               <motion.div style={reduce ? undefined : { rotateX: rotX, rotateY: rotY }}>
                 <BeamBorder colors={`rgb(${s.rgb}), transparent`} speed="6s" className="shadow-[0_40px_120px_-30px_rgba(0,0,0,.8)]">
-                  <div className="rounded-2xl bg-[#0B0F1B]/90 p-2 backdrop-blur sm:p-3"><Visual /></div>
+                  <div className="rounded-2xl bg-[#0F1011] p-2 sm:p-3"><LiveVideo {...s.video} big eager className="aspect-[16/10] rounded-xl" /></div>
                 </BeamBorder>
               </motion.div>
             </motion.div>
@@ -212,16 +216,18 @@ function Capabilities({ s }) {
                 viewport={{ once: true, margin: '-60px' }}
                 transition={{ duration: 0.9, ease, delay: (i % 3) * 0.1 }}
               >
-                <SpotlightCard rgb={s.rgb} className="h-full p-7">
-                  <span
-                    className="relative grid h-11 w-11 place-items-center rounded-xl border transition-all duration-500 group-hover:rotate-[8deg] group-hover:scale-110 group-hover:shadow-[0_0_24px_-4px_var(--glow)]"
-                    style={{ borderColor: `rgba(${s.rgb},.35)`, background: `rgba(${s.rgb},.1)`, color: `rgb(${s.rgb})` }}
-                  >
-                    <Icon className="h-5 w-5" aria-hidden="true" />
-                  </span>
-                  <span className="absolute right-6 top-6 font-mono text-xs text-white/15 transition-colors duration-300 group-hover:text-white/40">0{i + 1}</span>
-                  <h3 className="mt-5 text-lg font-semibold">{c.t}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted">{c.d}</p>
+                <SpotlightCard rgb={s.rgb} className="flex h-full flex-col p-2.5">
+                  {c.video && <LiveVideo {...c.video} className="aspect-video rounded-lg" />}
+                  <div className="flex-1 px-3.5 pb-4 pt-5">
+                    <div className="flex items-center justify-between">
+                      <span className="relative grid h-9 w-9 place-items-center rounded-lg border border-white/[.08] bg-white/[.03] text-fg/80 transition-all duration-500 group-hover:rotate-[8deg] group-hover:text-fg">
+                        <Icon className="h-[18px] w-[18px]" aria-hidden="true" />
+                      </span>
+                      <span className="font-mono text-xs text-white/20 transition-colors duration-300 group-hover:text-white/50">0{i + 1}</span>
+                    </div>
+                    <h3 className="mt-4 text-[17px] font-medium">{c.t}</h3>
+                    <p className="mt-2 text-[15px] leading-relaxed text-muted">{c.d}</p>
+                  </div>
                 </SpotlightCard>
               </motion.div>
             )
@@ -258,6 +264,24 @@ function Workflow({ s }) {
             </motion.span>
             <span className="pb-3 font-mono text-sm text-muted">/ 0{s.steps.length}</span>
           </div>
+          {/* live clip for the active step */}
+          {s.steps[active]?.video && (
+            <div className="relative mt-6 hidden aspect-video overflow-hidden rounded-xl border border-white/10 shadow-[0_30px_80px_-30px_rgba(0,0,0,.9)] lg:block">
+              <AnimatePresence initial={false}>
+                <motion.div
+                  key={active}
+                  className="absolute inset-0"
+                  initial={{ opacity: 0, scale: 1.04 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.6, ease }}
+                >
+                  <LiveVideo {...s.steps[active].video} big className="h-full w-full" />
+                </motion.div>
+              </AnimatePresence>
+              <span className="absolute right-3 top-9 z-10 rounded-full bg-black/60 px-2 py-0.5 font-mono text-[10px] text-white/80 backdrop-blur">Step 0{active + 1}</span>
+            </div>
+          )}
         </div>
         <div ref={ref} className="relative pl-14">
           <div className="absolute bottom-2 left-[19px] top-2 w-px bg-line" aria-hidden="true" />
@@ -282,6 +306,7 @@ function Workflow({ s }) {
                       style={current ? { borderColor: `rgba(${s.rgb},.5)`, boxShadow: `0 24px 70px -30px rgba(${s.rgb},.6)` } : undefined}
                     >
                       {current && <motion.span layoutId={`wf-glow-${s.slug}`} className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full blur-3xl" style={{ background: `rgba(${s.rgb},.25)` }} aria-hidden="true" />}
+                      {st.video && <LiveVideo {...st.video} className="relative -mx-2 -mt-2 mb-5 aspect-video rounded-lg lg:hidden" />}
                       <h3 className="relative text-lg font-semibold">{st.t}</h3>
                       <p className="relative mt-2 leading-relaxed text-muted">{st.d}</p>
                     </div>
@@ -347,9 +372,9 @@ function OtherSolutions({ s }) {
               <Reveal key={o.slug} delay={i * 0.08}>
                 <SpotlightCard rgb={o.rgb} tilt={false} className="h-full">
                   <Link to={`/solutions/${o.slug}`} className="flex items-center gap-5 p-6">
-                    <span className="grid h-12 w-12 shrink-0 place-items-center rounded-xl transition-transform duration-500 group-hover:rotate-[360deg]" style={{ background: `rgba(${o.rgb},.12)`, color: `rgb(${o.rgb})` }}>
-                      <Icon className="h-6 w-6" aria-hidden="true" />
-                    </span>
+                    {o.video
+                      ? <LiveVideo {...o.video} tag={undefined} label={undefined} className="aspect-video w-32 shrink-0 rounded-lg sm:w-40" />
+                      : <span className="grid h-12 w-12 shrink-0 place-items-center rounded-xl" style={{ background: `rgba(${o.rgb},.12)`, color: `rgb(${o.rgb})` }}><Icon className="h-6 w-6" aria-hidden="true" /></span>}
                     <span className="flex-1">
                       <span className="block text-lg font-semibold">{o.name}</span>
                       <span className="mt-0.5 block text-sm text-muted">{o.short}</span>

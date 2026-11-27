@@ -160,9 +160,9 @@ export default function Dashboard({ id = 'dashboard', initialView = 'overview', 
   }, [inView, reduce, drawer, push])
 
   const simulate = () => {
-    const id = push({ t: 'Intrusion detected · after hours', cam: 'CAM-11', z: 'Server room · Floor 2', lvl: 'critical' })
+    const id = push({ t: 'Intrusion detected · after hours', cam: 'CAM-11', z: 'Warehouse A · Floor 2', lvl: 'critical' })
     setIncident(true)
-    setToast({ id, t: 'Intrusion detected in Server room', s: 'CAM-11 · security team notified' })
+    setToast({ id, t: 'Intrusion detected in Warehouse A', s: 'CAM-11 · security team notified' })
     setTimeout(() => setIncident(false), 2600)
     setTimeout(() => setToast((x) => (x?.id === id ? null : x)), 6000)
   }

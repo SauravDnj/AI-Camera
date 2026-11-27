@@ -8,21 +8,22 @@ export const LVL = {
 }
 
 export const CAMS = [
-  { id: 'CAM-01', name: 'Main gate', floor: 'Ground', scene: 'gate', people: 2 },
-  { id: 'CAM-02', name: 'Reception', floor: 'Ground', scene: 'lobby', people: 3 },
-  { id: 'CAM-04', name: 'Open office', floor: 'Floor 2', scene: 'office', people: 3, live: true },
-  { id: 'CAM-11', name: 'Server room', floor: 'Floor 2', scene: 'server', people: 1 },
-  { id: 'CAM-14', name: 'Design studio', floor: 'Floor 3', scene: 'office', people: 2 },
-  { id: 'CAM-17', name: 'Parking P2', floor: 'Ground', scene: 'parking', people: 1 },
+  // src = real clip in /public/videos (scene = SVG fallback if a clip is removed)
+  { id: 'CAM-01', name: 'Main gate', floor: 'Ground', scene: 'gate', people: 5, src: '/videos/cam-01-entrance.mp4' },
+  { id: 'CAM-02', name: 'Reception', floor: 'Ground', scene: 'lobby', people: 1, src: '/videos/cam-03-reception.mp4' },
+  { id: 'CAM-04', name: 'Open office', floor: 'Floor 2', scene: 'office', people: 2, live: true, src: '/videos/cam-04-corridor.mp4' },
+  { id: 'CAM-11', name: 'Warehouse A', floor: 'Floor 2', scene: 'server', people: 3, src: '/videos/cam-05-warehouse-a.mp4' },
+  { id: 'CAM-14', name: 'Atrium', floor: 'Floor 3', scene: 'office', people: 38, src: '/videos/cam-08-atrium.mp4' },
+  { id: 'CAM-17', name: 'Parking P2', floor: 'Ground', scene: 'parking', people: 0, src: '/videos/cam-07-parking.mp4' },
 ]
 
 export const ALERT_POOL = [
   { t: 'Unknown face detected', cam: 'CAM-04', z: 'Zone B · Floor 2', lvl: 'critical' },
-  { t: 'Tailgating at server room', cam: 'CAM-11', z: 'Door 3 · Floor 2', lvl: 'critical' },
+  { t: 'Tailgating at warehouse door', cam: 'CAM-11', z: 'Dock door 3 · Floor 2', lvl: 'critical' },
   { t: 'Rahul M. checked in late', cam: 'CAM-01', z: 'Main gate', lvl: 'warning' },
   { t: 'Loitering near parking', cam: 'CAM-17', z: 'Parking P2', lvl: 'warning' },
   { t: 'Visitor badge verified', cam: 'CAM-02', z: 'Reception', lvl: 'info' },
-  { t: 'Desk idle > 45 min', cam: 'CAM-14', z: 'Desk 3-14', lvl: 'info' },
+  { t: 'Crowd density rising', cam: 'CAM-14', z: 'Atrium · Floor 3', lvl: 'info' },
   { t: 'After-hours motion', cam: 'CAM-17', z: 'Parking P2', lvl: 'critical' },
 ]
 

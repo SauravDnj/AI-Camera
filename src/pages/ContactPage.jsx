@@ -409,7 +409,7 @@ function ContactForm({ topic, setTopic }) {
           <ArrowLeft className="h-4 w-4" aria-hidden="true" />Back
         </button>
         {step < 3 ? (
-          <button type="button" onClick={() => go(step + 1)} className="group flex min-h-12 cursor-pointer items-center gap-2 rounded-xl bg-accent px-6 text-sm font-semibold text-white shadow-[0_10px_40px_-10px_rgba(59,130,246,.8)] transition-colors hover:bg-blue-500">
+          <button type="button" onClick={() => go(step + 1)} className="group flex min-h-12 cursor-pointer items-center gap-2 rounded-full bg-[#E5E5E6] px-6 text-[15px] font-medium text-[#08090A] transition-colors hover:bg-white">
             Continue <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
           </button>
         ) : (

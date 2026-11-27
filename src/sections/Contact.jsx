@@ -47,19 +47,19 @@ export default function Contact({ defaultInterest = 'Security + Attendance' }) {
   return (
     <section id="contact" className="relative overflow-hidden py-24 lg:py-32">
       <div className="bg-grid mask-fade absolute inset-0" aria-hidden="true" />
-      <div className="absolute -left-40 top-1/4 h-[500px] w-[500px] rounded-full bg-accent/20 blur-[140px]" aria-hidden="true" />
+      <div className="absolute -left-40 top-1/4 h-[500px] w-[500px] rounded-full bg-white/[.03] blur-[140px]" aria-hidden="true" />
       <Container className="relative">
         <Reveal y={50}>
-        <BeamBorder radius="rounded-3xl" speed="7s" className="shadow-[0_40px_120px_-40px_rgba(59,130,246,.5)]">
-        <div className="grid overflow-hidden rounded-3xl bg-[#0B0F1B]/95 lg:grid-cols-2">
+        <BeamBorder radius="rounded-3xl" speed="7s" className="shadow-[0_40px_120px_-40px_rgba(0,0,0,.9)]">
+        <div className="grid overflow-hidden rounded-3xl bg-[#0F1011] lg:grid-cols-2">
           <div className="relative isolate overflow-hidden p-8 sm:p-12">
             {/* radar glow behind the pitch */}
             <div className="pointer-events-none absolute -bottom-40 -left-40 -z-10 h-[420px] w-[420px]" aria-hidden="true">
               {[1, 0.75, 0.5].map((k) => (
-                <span key={k} className="absolute inset-0 m-auto rounded-full border border-accent/15" style={{ width: `${k * 100}%`, height: `${k * 100}%` }} />
+                <span key={k} className="absolute inset-0 m-auto rounded-full border border-white/[.06]" style={{ width: `${k * 100}%`, height: `${k * 100}%` }} />
               ))}
-              <span className="absolute inset-[12%] rounded-full border border-dashed border-cyan/25 animate-[spin_30s_linear_infinite]" />
-              <span className="absolute inset-[36%] rounded-full bg-accent/20 blur-3xl" />
+              <span className="absolute inset-[12%] rounded-full border border-dashed border-white/10 animate-[spin_30s_linear_infinite]" />
+              <span className="absolute inset-[36%] rounded-full bg-white/[.04] blur-3xl" />
             </div>
             <Reveal><Eyebrow>Book a demo</Eyebrow></Reveal>
             <Reveal delay={0.05}>
@@ -113,14 +113,14 @@ export default function Contact({ defaultInterest = 'Security + Attendance' }) {
                         onChange={set(f.id)}
                         aria-invalid={!!errors[f.id]}
                         aria-describedby={errors[f.id] ? `${f.id}-err` : undefined}
-                        className={`min-h-12 w-full rounded-xl border bg-card px-4 text-base text-fg outline-none transition-colors placeholder:text-muted/60 focus:border-accent focus:ring-2 focus:ring-accent/30 ${errors[f.id] ? 'border-danger' : 'border-line'}`}
+                        className={`min-h-12 w-full rounded-xl border bg-card px-4 text-base text-fg outline-none transition-colors placeholder:text-muted/60 focus:border-white/30 focus:ring-2 focus:ring-white/10 ${errors[f.id] ? 'border-danger' : 'border-line'}`}
                       />
                       {errors[f.id] && <p id={`${f.id}-err`} className="mt-1.5 text-sm text-danger">{errors[f.id]}</p>}
                     </div>
                   ))}
                   <div className="sm:col-span-2">
                     <label htmlFor="interest" className="mb-2 block text-sm font-medium">I'm interested in</label>
-                    <select id="interest" value={values.interest} onChange={set('interest')} className="min-h-12 w-full cursor-pointer rounded-xl border border-line bg-card px-4 text-base outline-none focus:border-accent focus:ring-2 focus:ring-accent/30">
+                    <select id="interest" value={values.interest} onChange={set('interest')} className="min-h-12 w-full cursor-pointer rounded-xl border border-line bg-card px-4 text-base outline-none focus:border-white/30 focus:ring-2 focus:ring-white/10">
                       <option>Security + Attendance</option>
                       <option>AI Security only</option>
                       <option>Attendance only</option>
@@ -130,12 +130,12 @@ export default function Contact({ defaultInterest = 'Security + Attendance' }) {
                   </div>
                   <div className="sm:col-span-2">
                     <label htmlFor="msg" className="mb-2 block text-sm font-medium">Anything else? <span className="font-normal text-muted">(optional)</span></label>
-                    <textarea id="msg" rows={3} value={values.msg || ''} onChange={set('msg')} className="w-full rounded-xl border border-line bg-card px-4 py-3 text-base outline-none focus:border-accent focus:ring-2 focus:ring-accent/30" />
+                    <textarea id="msg" rows={3} value={values.msg || ''} onChange={set('msg')} className="w-full rounded-xl border border-line bg-card px-4 py-3 text-base outline-none focus:border-white/30 focus:ring-2 focus:ring-white/10" />
                   </div>
                   <button
                     type="submit"
                     disabled={status === 'sending'}
-                    className="min-h-12 cursor-pointer rounded-xl bg-accent px-6 text-sm font-semibold text-white shadow-[0_10px_40px_-10px_rgba(59,130,246,.8)] transition-all hover:bg-blue-500 disabled:cursor-wait disabled:opacity-70 sm:col-span-2"
+                    className="min-h-12 cursor-pointer rounded-full bg-[#E5E5E6] px-6 text-[15px] font-medium text-[#08090A] transition-colors hover:bg-white disabled:cursor-wait disabled:opacity-70 sm:col-span-2"
                   >
                     {status === 'sending' ? (
                       <span className="flex items-center justify-center gap-2"><span className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white" />Sending…</span>

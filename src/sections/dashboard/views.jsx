@@ -1,7 +1,6 @@
 import { AnimatePresence, LayoutGroup, motion } from 'framer-motion'
 import { ArrowRight, ArrowUpDown, Bell, BellOff, Cctv, CheckCheck, Clock, Maximize2, Search, ShieldCheck, Users, X } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
-import CameraFeed from '../../components/CameraFeed'
 import { CountUp } from '../TrustBar'
 import { CAMS, DEPTS, EMPLOYEES, HEAT, LVL, SERIES, STATUS } from './data'
 import { Avatar, BarChart, MiniCam, Segmented } from './parts'
@@ -82,7 +81,7 @@ export function OverviewView({ alerts, openCount, go, openAlert }) {
               <Maximize2 className="h-3 w-3" aria-hidden="true" /> All 48 cameras
             </button>
           </div>
-          <CameraFeed label="CAM-04 · Floor 2" />
+          <MiniCam cam={CAMS.find((c) => c.id === 'CAM-04')} big />
         </motion.div>
 
         <motion.div variants={rise} className="flex flex-col rounded-xl border border-line bg-card p-4">
@@ -137,7 +136,7 @@ export function CamerasView({ alertCams }) {
           <AnimatePresence mode="popLayout">
             {cams.map((c) => (
               <motion.li key={c.id} layout initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }} transition={{ duration: 0.35, ease }}>
-                <motion.button layoutId={`cam-${c.id}`} onClick={() => setOpen(c)} className="group block w-full cursor-pointer rounded-xl border border-line bg-card p-2 text-left transition-colors hover:border-accent/50" aria-label={`Expand ${c.id} ${c.name}`}>
+                <motion.button layoutId={`cam-${c.id}`} onClick={() => setOpen(c)} className="group block w-full cursor-pointer rounded-xl border border-line bg-card p-2 text-left transition-[border-color,transform,box-shadow] duration-300 hover:-translate-y-1 hover:border-white/25 hover:shadow-[0_20px_50px_-20px_rgba(0,0,0,.9)]" aria-label={`Expand ${c.id} ${c.name}`}>
                   <MiniCam cam={c} alert={alertCams.has(c.id)} />
                   <span className="mt-2 flex items-center justify-between px-1">
                     <span className="text-xs font-medium">{c.name}</span>
@@ -159,7 +158,7 @@ export function CamerasView({ alertCams }) {
                   <button onClick={() => setOpen(null)} aria-label="Close camera" className="grid h-8 w-8 cursor-pointer place-items-center rounded-lg border border-line hover:bg-white/5"><X className="h-4 w-4" /></button>
                 </div>
                 <div className="grid gap-3 lg:grid-cols-[1.6fr_1fr]">
-                  {open.live ? <CameraFeed label={`${open.id} · ${open.name}`} /> : <MiniCam cam={open} big alert={alertCams.has(open.id)} />}
+                  <MiniCam cam={open} big alert={alertCams.has(open.id)} />
                   <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }} className="space-y-2 text-sm">
                     {[['People detected', open.people], ['Recognised', `${open.people - (alertCams.has(open.id) ? 1 : 0)} / ${open.people}`], ['Resolution', '1080p · 30 FPS'], ['AI model', 'Vision v3 · edge'], ['Recording', 'Continuous · 30 days']].map(([k, v]) => (
                       <div key={k} className="flex justify-between rounded-lg border border-line bg-surface px-3 py-2"><span className="text-muted">{k}</span><span className="font-mono text-xs">{v}</span></div>

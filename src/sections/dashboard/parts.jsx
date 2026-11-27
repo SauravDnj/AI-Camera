@@ -1,5 +1,7 @@
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
-import { X } from 'lucide-react'
+import { Users, X } from 'lucide-react'
+import { useAutoPlay } from '../../components/hero/CameraWall'
+import { LiveTime } from '../../lib/clock'
 import { useEffect, useRef, useState } from 'react'
 
 const ease = [0.16, 1, 0.3, 1]
@@ -51,8 +53,54 @@ const SCENES = {
   ),
 }
 
+/* Real-video camera tile (used when the camera has a `src` clip) */
+function VideoCam({ cam, big, alert }) {
+  const reduce = useReducedMotion()
+  const video = useRef(null)
+  useAutoPlay(video, reduce, { pauseOnScroll: !big })
+  return (
+    <div className={`relative aspect-video w-full overflow-hidden rounded-lg border bg-black transition-colors ${alert ? 'border-danger shadow-[0_0_0_1px_#F87171,0_0_30px_-6px_#F87171]' : 'border-white/10'}`}>
+      <video
+        ref={video}
+        src={cam.src}
+        poster={cam.src.replace(/\.mp4$/, '.jpg')}
+        muted
+        loop
+        playsInline
+        preload="none"
+        aria-hidden="true"
+        tabIndex={-1}
+        className={`absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out ${big ? '' : 'group-hover:scale-[1.06]'}`}
+      />
+      {!big && <div className="pointer-events-none absolute inset-0 bg-[#0B1220]/40 transition-opacity duration-500 group-hover:opacity-0" aria-hidden="true" />}
+      <div className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(0deg,rgba(0,0,0,.15)_0_1px,transparent_1px_3px)] opacity-60" aria-hidden="true" />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,.5),transparent_30%,transparent_68%,rgba(0,0,0,.55))]" aria-hidden="true" />
+      {big && !reduce && (
+        <motion.div className="pointer-events-none absolute inset-x-0 bottom-[4%] top-[4%]" animate={{ y: ['0%', '100%', '0%'] }} transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }} aria-hidden="true">
+          <div className={`h-px ${alert ? 'bg-danger shadow-[0_0_14px_2px_rgba(248,113,113,.6)]' : 'bg-white/60 shadow-[0_0_14px_2px_rgba(255,255,255,.3)]'}`} />
+        </motion.div>
+      )}
+      {alert && <div className="pointer-events-none absolute inset-0 shadow-[inset_0_0_40px_-8px_rgba(248,113,113,.55)]" aria-hidden="true" />}
+
+      <div className="pointer-events-none absolute inset-0 flex flex-col justify-between p-1.5 font-mono text-[9px] text-white/85 sm:p-2 sm:text-[10px]">
+        <div className="flex items-center justify-between gap-2">
+          <span className="flex items-center gap-1"><span className="h-1.5 w-1.5 rounded-full bg-danger blink" />REC · {cam.id}{big && <span className="text-white/70"> · {cam.name}</span>}</span>
+          {big && <LiveTime className="text-white/70" />}
+        </div>
+        <div className="flex items-center justify-between gap-2">
+          {alert
+            ? <span className="rounded bg-danger px-1.5 py-0.5 font-medium text-black">{big ? 'ALERT · Unknown face 61%' : 'ALERT'}</span>
+            : <span className="text-white/65">{big ? 'AI · Vision v3 · 30 FPS' : ''}</span>}
+          <span className="flex items-center gap-1 rounded bg-black/50 px-1.5 py-0.5"><Users className="h-2.5 w-2.5" aria-hidden="true" />{cam.people}</span>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export function MiniCam({ cam, big = false, alert = false }) {
   const reduce = useReducedMotion()
+  if (cam.src) return <VideoCam cam={cam} big={big} alert={alert} />
   const boxes = Array.from({ length: cam.people }, (_, i) => ({
     x: 18 + ((i * 29 + cam.id.charCodeAt(5) * 7) % 60),
     y: 30 + ((i * 13) % 20),

@@ -84,24 +84,24 @@ function NeuralVisual() {
 function Card({ f, i }) {
   const Icon = f.icon
   return (
+    <div className={`bg-bg ${f.span || ''}`}>
     <motion.div
-      className={`[perspective:1200px] ${f.span || ''}`}
-      initial={{ opacity: 0, y: 60, rotateX: 18, scale: 0.94 }}
-      whileInView={{ opacity: 1, y: 0, rotateX: 0, scale: 1 }}
+      className="h-full"
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-60px' }}
-      transition={{ duration: 0.9, ease, delay: (i % 3) * 0.1 }}
+      transition={{ duration: 0.8, ease, delay: (i % 3) * 0.08 }}
     >
-      <SpotlightCard rgb={f.rgb} className="h-full p-7">
+      <SpotlightCard flat className="h-full p-8">
         <div className={`relative ${f.visual === 'face' || f.visual === 'radar' ? 'grid items-center gap-6 sm:grid-cols-[1fr_auto]' : ''}`}>
           <div>
             <span
-              className="relative grid h-11 w-11 place-items-center rounded-xl border transition-all duration-300 group-hover:shadow-[0_0_24px_-4px_var(--glow)]"
-              style={{ borderColor: `rgba(${f.rgb},.35)`, background: `rgba(${f.rgb},.1)`, color: `rgb(${f.rgb})` }}
+              className="relative grid h-9 w-9 place-items-center rounded-lg border border-white/[.08] bg-white/[.03] text-fg/80 transition-colors duration-300 group-hover:text-fg"
             >
               <Icon className={`h-5 w-5 transition-all duration-300 ${f.hover || ''}`} aria-hidden="true" />
             </span>
-            <h3 className="mt-5 text-lg font-semibold">{f.title}</h3>
-            <p className="mt-2 text-sm leading-relaxed text-muted">{f.desc}</p>
+            <h3 className="mt-6 text-[17px] font-medium text-fg">{f.title}</h3>
+            <p className="mt-2 text-[15px] leading-relaxed text-muted">{f.desc}</p>
             {f.visual === 'neural' && <NeuralVisual />}
           </div>
           {f.visual === 'face' && <FaceVisual />}
@@ -109,21 +109,20 @@ function Card({ f, i }) {
         </div>
       </SpotlightCard>
     </motion.div>
+    </div>
   )
 }
 
 export default function Features() {
   return (
     <section id="features" className="relative py-24 lg:py-32">
-      <div className="bg-grid mask-fade absolute inset-0 opacity-60" aria-hidden="true" />
-      <div className="absolute left-1/2 top-1/3 h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-accent/10 blur-[140px]" aria-hidden="true" />
-      <Container className="relative">
+                  <Container className="relative">
         <SectionHeader
           eyebrow="Features"
           title={<>Everything your cameras <span className="text-gradient">could have been doing.</span></>}
           sub="A complete AI vision stack — from recognition and tracking to alerts, recording and reports."
         />
-        <div className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-16 grid gap-px overflow-hidden rounded-xl border border-white/[.08] bg-white/[.08] sm:grid-cols-2 lg:grid-cols-3">
           {FEATURES.map((f, i) => <Card key={f.title} f={f} i={i} />)}
         </div>
       </Container>

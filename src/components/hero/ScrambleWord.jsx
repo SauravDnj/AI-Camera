@@ -5,7 +5,7 @@ const GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#%&@$<>/'
 
 /* Cycles through `words`, "decoding" each one with a scramble effect.
    Visual only — pass the readable sentence to screen readers separately. */
-export default function ScrambleWord({ words, interval = 2800, className = '', start = true }) {
+export default function ScrambleWord({ words, interval = 2800, className = '', start = true, reserve = true }) {
   const reduce = useReducedMotion()
   const [idx, setIdx] = useState(0)
   const [text, setText] = useState(words[0])
@@ -41,6 +41,8 @@ export default function ScrambleWord({ words, interval = 2800, className = '', s
 
   // Reserve width for the longest word to avoid layout shift while cycling.
   const longest = words.reduce((a, b) => (b.length > a.length ? b : a), '')
+  // reserve={false}: no fixed width (for centred lines, where reserved space would leave a gap)
+  if (!reserve) return <span className={`whitespace-nowrap ${className}`} aria-hidden="true">{text}</span>
   return (
     <span className={`relative inline-grid ${className}`} aria-hidden="true">
       <span className="invisible col-start-1 row-start-1 whitespace-nowrap">{longest}</span>

@@ -25,8 +25,7 @@ export function Reveal({ children, delay = 0, y = 28, className = '' }) {
 
 export function Eyebrow({ children }) {
   return (
-    <span className="inline-flex items-center gap-2 rounded-full border border-cyan/25 bg-cyan/5 px-3 py-1 font-mono text-xs uppercase tracking-[0.18em] text-cyan">
-      <span className="h-1.5 w-1.5 rounded-full bg-cyan blink" aria-hidden="true" />
+    <span className="inline-flex items-center gap-2 text-[15px] font-medium text-muted">
       {children}
     </span>
   )
@@ -77,13 +76,25 @@ export function SplitHeading({ as = 'h2', children, className = '', delay = 0 })
 }
 
 export function SectionHeader({ eyebrow, title, sub, center = true }) {
+  // `center` (the default) = wide split layout; `center={false}` = stacked, for narrow columns
+  if (!center) {
+    return (
+      <div className="max-w-xl">
+        <Reveal><Eyebrow>{eyebrow}</Eyebrow></Reveal>
+        <SplitHeading className="mt-4 text-[2.25rem] leading-[1.05] sm:text-5xl" delay={0.08}>{title}</SplitHeading>
+        {sub && <Reveal delay={0.2}><p className="mt-6 text-[17px] leading-relaxed text-muted">{sub}</p></Reveal>}
+      </div>
+    )
+  }
   return (
-    <div className={`max-w-3xl ${center ? 'mx-auto text-center' : ''}`}>
-      <Reveal><Eyebrow>{eyebrow}</Eyebrow></Reveal>
-      <SplitHeading className="mt-5 text-3xl font-semibold leading-tight sm:text-4xl lg:text-5xl" delay={0.08}>{title}</SplitHeading>
+    <div className="grid gap-8 lg:grid-cols-2 lg:gap-16">
+      <div>
+        <Reveal><Eyebrow>{eyebrow}</Eyebrow></Reveal>
+        <SplitHeading className="mt-4 text-[2.25rem] leading-[1.05] sm:text-5xl" delay={0.08}>{title}</SplitHeading>
+      </div>
       {sub && (
-        <Reveal delay={0.25}>
-          <p className="mt-5 text-base leading-relaxed text-muted sm:text-lg">{sub}</p>
+        <Reveal delay={0.2} className="lg:pt-11">
+          <p className="max-w-xl text-lg leading-[1.6] text-fg/80 sm:text-[21px]">{sub}</p>
         </Reveal>
       )}
     </div>
@@ -91,7 +102,7 @@ export function SectionHeader({ eyebrow, title, sub, center = true }) {
 }
 
 /* ── Card with cursor spotlight, glowing border and optional 3D tilt ── */
-export function SpotlightCard({ children, className = '', tilt = true, rgb = '59,130,246', as = 'div', ...rest }) {
+export function SpotlightCard({ children, className = '', tilt = false, rgb = '255,255,255', flat = false, as = 'div', ...rest }) {
   const reduce = useReducedMotion()
   const mx = useMotionValue(-500)
   const my = useMotionValue(-500)
@@ -99,8 +110,8 @@ export function SpotlightCard({ children, className = '', tilt = true, rgb = '59
   const py = useMotionValue(0.5)
   const rx = useSpring(useTransform(py, [0, 1], [7, -7]), { stiffness: 200, damping: 20 })
   const ry = useSpring(useTransform(px, [0, 1], [-7, 7]), { stiffness: 200, damping: 20 })
-  const fill = useMotionTemplate`radial-gradient(420px circle at ${mx}px ${my}px, rgba(${rgb},.14), transparent 65%)`
-  const ring = useMotionTemplate`radial-gradient(260px circle at ${mx}px ${my}px, rgba(${rgb},.9), transparent 70%)`
+  const fill = useMotionTemplate`radial-gradient(420px circle at ${mx}px ${my}px, rgba(255,255,255,.045), transparent 65%)`
+  const ring = useMotionTemplate`radial-gradient(260px circle at ${mx}px ${my}px, rgba(255,255,255,.35), transparent 70%)`
   const onMove = (e) => {
     if (e.pointerType !== 'mouse') return
     const r = e.currentTarget.getBoundingClientRect()
@@ -114,12 +125,12 @@ export function SpotlightCard({ children, className = '', tilt = true, rgb = '59
       {...rest}
       onPointerMove={onMove}
       onPointerLeave={onLeave}
-      style={{ '--glow': `rgba(${rgb},.55)`, ...(tilt && !reduce ? { rotateX: rx, rotateY: ry, transformPerspective: 900 } : {}) }}
-      className={`group relative isolate overflow-hidden rounded-2xl border border-line bg-card transition-[border-color,box-shadow] duration-300 hover:shadow-[0_24px_70px_-30px_var(--glow)] ${className}`}
+      style={{ '--glow': `rgba(${rgb},.25)`, ...(tilt && !reduce ? { rotateX: rx, rotateY: ry, transformPerspective: 900 } : {}) }}
+      className={`group relative isolate overflow-hidden transition-colors duration-300 ${flat ? 'bg-bg hover:bg-[#0C0D0E]' : 'panel rounded-xl hover:border-white/[.14]'} ${className}`}
     >
       <motion.div className="pointer-events-none absolute inset-0 -z-10 opacity-0 transition-opacity duration-300 group-hover:opacity-100" style={{ background: fill }} aria-hidden="true" />
       <motion.div
-        className="pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+        className={`pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 transition-opacity duration-300 ${flat ? '' : 'group-hover:opacity-100'}`}
         style={{ background: ring, padding: 1, WebkitMask: 'linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)', WebkitMaskComposite: 'xor', maskComposite: 'exclude' }}
         aria-hidden="true"
       />
@@ -129,7 +140,7 @@ export function SpotlightCard({ children, className = '', tilt = true, rgb = '59
 }
 
 /* ── Rotating light beam around a rounded border ── */
-export function BeamBorder({ children, className = '', radius = 'rounded-2xl', speed = '6s', colors = '#22D3EE, #3B82F6' }) {
+export function BeamBorder({ children, className = '', radius = 'rounded-2xl', speed = '6s', colors = 'rgba(255,255,255,.5), rgba(255,255,255,.15)' }) {
   return (
     <div className={`relative overflow-hidden p-px ${radius} ${className}`}>
       <span
@@ -142,21 +153,18 @@ export function BeamBorder({ children, className = '', radius = 'rounded-2xl', s
   )
 }
 
-export function Button({ href = '#', to, variant = 'primary', children, className = '', icon = true, ...rest }) {
+export function Button({ href = '#', to, variant = 'primary', children, className = '', icon = false, ...rest }) {
   const base =
-    'group relative inline-flex min-h-12 cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-xl px-6 text-sm font-semibold transition-all duration-300'
+    'group relative inline-flex min-h-10 cursor-pointer items-center justify-center gap-1.5 overflow-hidden rounded-full px-5 text-[15px] font-medium transition-colors duration-200'
   const styles = {
     primary:
-      'bg-accent text-white shadow-[0_0_0_1px_rgba(255,255,255,.12)_inset,0_10px_40px_-10px_rgba(59,130,246,.8)] hover:bg-blue-500 hover:shadow-[0_0_0_1px_rgba(255,255,255,.2)_inset,0_14px_50px_-8px_rgba(59,130,246,.95)]',
-    ghost: 'glass text-fg hover:border-cyan/40 hover:bg-white/5',
+      'border border-[#E5E5E6] bg-[#E5E5E6] text-[#08090A] hover:border-white hover:bg-white',
+    ghost: 'border border-white/10 bg-white/[.03] text-fg hover:border-white/20 hover:bg-white/[.07]',
   }
   const inner = (
     <>
-      {variant === 'primary' && (
-        <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover:translate-x-full" aria-hidden="true" />
-      )}
       <span className="relative">{children}</span>
-      {icon && <ArrowRight className="relative h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />}
+      {icon && <ArrowRight className="relative h-3.5 w-3.5 opacity-70 transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden="true" />}
     </>
   )
   const cls = `${base} ${styles[variant]} ${className}`
@@ -168,9 +176,9 @@ export function Button({ href = '#', to, variant = 'primary', children, classNam
 
 export function LogoMark() {
   return (
-    <span className="relative grid h-9 w-9 place-items-center rounded-xl border border-accent/40 bg-accent/10" aria-hidden="true">
-      <span className="absolute inset-1.5 rounded-full border-2 border-accent" />
-      <span className="h-2.5 w-2.5 rounded-full bg-cyan shadow-[0_0_12px_#22D3EE]" />
+    <span className="relative grid h-7 w-7 place-items-center rounded-full bg-fg" aria-hidden="true">
+      <span className="absolute inset-[5px] rounded-full border-[2.5px] border-bg" />
+      <span className="h-1.5 w-1.5 rounded-full bg-bg" />
     </span>
   )
 }

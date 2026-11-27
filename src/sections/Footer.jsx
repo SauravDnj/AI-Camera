@@ -11,20 +11,20 @@ const COLS = [
 
 export default function Footer() {
   return (
-    <footer className="border-t border-line bg-surface/60 pb-10 pt-16">
+    <footer className="border-t border-white/[.06] pb-10 pt-20">
       <Container>
         <div className="grid gap-12 lg:grid-cols-[1.3fr_2fr]">
           <div>
             <Link to="/" className="flex items-center gap-2.5">
               <LogoMark />
-              <span className="font-display text-lg font-semibold">{BRAND.name}<span className="text-cyan"> {BRAND.suffix}</span></span>
+              <span className="font-display text-lg font-semibold">{BRAND.name}<span className="text-muted"> {BRAND.suffix}</span></span>
             </Link>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted">{BRAND.tagline}. Turn every camera into an intelligent security and workforce sensor.</p>
           </div>
           <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
             {COLS.map((c) => (
               <div key={c.h}>
-                <h4 className="text-sm font-semibold">{c.h}</h4>
+                <h4 className="text-[13px] font-medium text-fg">{c.h}</h4>
                 <ul className="mt-4 space-y-2.5">
                   {c.l.map(([t, h]) => (
                     <li key={t}>
